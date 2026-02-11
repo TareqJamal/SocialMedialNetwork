@@ -45,8 +45,9 @@ class MainRepository
         return $this->model->create($data);
     }
 
-    public function storeWithFiles($data, array $columns, $file_folder = null)
+    public function storeWithFiles($data, array $columns = null, $file_folder = null)
     {
+        $columns = $this->columsFile;
         $file_folder = $this->fileFolder;
         if (isset($data)) {
             foreach ($data as $key => $value) {
@@ -68,9 +69,10 @@ class MainRepository
     }
 
 
-    public function updateWithFiles($id, $data, array $columns, $file_folder = null)
+    public function updateWithFiles($id, $data, array $columns = null, $file_folder = null)
     {
         $file_folder = $this->fileFolder;
+        $columns = $this->columsFile;
         $obj = $this->find($id);
         if (isset($data) && $obj) {
             foreach ($data as $key => $value) {
@@ -83,8 +85,9 @@ class MainRepository
         }
     }
 
-    public function deleteWithFiles($id, array $columns)
+    public function deleteWithFiles($id, array $columns = null)
     {
+        $columns = $this->columsFile;
         $obj = $this->find($id);
         if (isset($obj)) {
             foreach ($columns as $column) {
@@ -94,6 +97,7 @@ class MainRepository
         }
         return true;
     }
+
 
     public function get()
     {

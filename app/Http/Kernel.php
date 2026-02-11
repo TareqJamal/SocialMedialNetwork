@@ -70,7 +70,8 @@ class Kernel extends HttpKernel
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'checkPermission' =>\App\Http\Middleware\CheckPermission::class ,
         'checkAuth' =>\App\Http\Middleware\CheckAuth::class ,
-
+        'lang' => \App\Http\Middleware\lang::class,
+        'acceptJson' => \App\Http\Middleware\SetJsonifyHttp::class,
 
     ];
 }

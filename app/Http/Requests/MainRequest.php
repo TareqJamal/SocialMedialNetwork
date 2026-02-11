@@ -25,4 +25,15 @@ class MainRequest extends FormRequest
             //
         ];
     }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $prefix = $this->route()->getPrefix(); // Get the prefix from the route
+        if ( strpos($prefix, 'api')  !== false) {
+            $response = jsonApiValid($validator->errors());
+        }else{
+            $response = jsonValid($validator->errors());
+        }
+        throw new \Illuminate\Validation\ValidationException($validator, $response);
+    }
 }

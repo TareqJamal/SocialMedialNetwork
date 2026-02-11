@@ -57,7 +57,7 @@ if (!function_exists('jsonApiValid')) {
             'code' => $code,
             // 'data' => null,
             'message' => $data->all()[0]
-        ], 200);
+        ], 422);
     }
 }
 

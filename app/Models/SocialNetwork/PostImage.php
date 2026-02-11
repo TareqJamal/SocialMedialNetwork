@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models\SocialNetwork;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PostImage extends Model
+{
+    use HasFactory;
+    protected $table = 'post_images';
+    protected $fillable = ['post_id', 'image'];
+}

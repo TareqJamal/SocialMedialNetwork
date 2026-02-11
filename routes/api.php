@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-
-});
-Route::group([
-    'middleware' => 'api',
-], function () {
-
-    Route::post('register', [\App\Http\Controllers\api\AuthController::class,'register']);
-    Route::post('login', [\App\Http\Controllers\api\AuthController::class,'login']);
-    Route::post('logout', [\App\Http\Controllers\api\AuthController::class,'logout']);
-    Route::post('refresh', [\App\Http\Controllers\api\AuthController::class,'refresh']);
-    Route::post('profile', [\App\Http\Controllers\api\AuthController::class,'me']);
+Route::group(['middleware' => ['lang', 'acceptJson']], function () {
+    Route::group(['prefix' => 'auth'], function () {
+        Route::resource('login', LoginController::class);
+        Route::middleware('auth:sanctum')->group(function () {
 
 
+        });
+    });
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+    });
 });
