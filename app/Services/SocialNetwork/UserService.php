@@ -4,18 +4,24 @@ namespace App\Services\SocialNetwork;
 
 
 use App\Repositories\SocialNetwork\UserRepository;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function __construct(private UserRepository $repository, )
+    public function __construct(private UserRepository $repository)
     {
 
     }
 
-    public function registerUser($data)
+    public function login($data)
     {
+        $user = $this->getWhereFirst(['email' => $data['email']]);
+        if (!$user || !Hash::check($data['password'], $user->password)) {
+            return ['error' => __("api.the_password_is_incorrect")];
+        }
+        $token = $user->createToken('api-token')->plainTextToken;
+        $user->token = $token;
+        return $user;
 
     }
 
@@ -79,6 +85,11 @@ class UserService
     public function getWhere($where)
     {
         return $this->repository->getWhere($where);
+    }
+
+    public function getWhereFirst($where)
+    {
+        return $this->repository->getWhereFirst($where);
     }
 
 }

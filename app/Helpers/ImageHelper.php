@@ -34,9 +34,10 @@ if (!function_exists('show_image')) {
 if (!function_exists('show_file')) {
     function show_file($image): string
     {
-        if (Storage::exists('public/' . $image)) {
-            return Storage::url('public/' . $image);
+        if ($image && Storage::exists('public/' . $image)) {
+            return url('storage/' . $image);
         }
+        return url('default/no_image.png');
     }
 }
 

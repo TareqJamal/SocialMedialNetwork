@@ -56,7 +56,7 @@ if (!function_exists('jsonApiValid')) {
         return response()->json([
             'code' => $code,
             // 'data' => null,
-            'message' => $data->all()[0]
+            'message' => $msg
         ], 422);
     }
 }
