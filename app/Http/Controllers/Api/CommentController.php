@@ -26,6 +26,7 @@ class CommentController extends Controller
     public function update(CommentRequest $request, $id, CommentService $service, PostService $postService, NotificationService $notificationService)
     {
         $data = $request->validated();
+        $data['user_id'] = Auth::id();
         $comment = $service->find($id);
         if (!$comment) {
             return jsonApiValid(null, __('api.data_not_found'));

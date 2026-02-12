@@ -17,12 +17,25 @@ class ConnectionService
 
     public function sendConnectionRequest($data)
     {
-        $data['user_id'] = auth()->id();
-        $data['status'] = ConnectionsStatusEnum::Pending->value;
-        $alreadyExist = $this->getWhereFirst(['user_id' => $data['user_id'], 'connected_id' => $data['connected_id'], 'status' => ConnectionsStatusEnum::Pending]);
-        if ($alreadyExist) {
-            return ['error' => __("api.you_have_already_connection_requested")];
+        $userId = auth()->id();
+        $connectedId = $data['connected_id'];
+
+        if ($userId == $connectedId) {
+            return ['error' => __("api.you_cannot_connect_to_yourself")];
         }
+
+        // Check if connection already exists in either direction
+        $alreadyExist = $this->repository->getConnectionBetween($userId, $connectedId);
+
+        if ($alreadyExist) {
+            if ($alreadyExist->status == ConnectionsStatusEnum::Pending->value) {
+                return ['error' => __("api.you_have_already_connection_requested")];
+            }
+            return ['error' => __("api.you_are_already_connected")];
+        }
+
+        $data['user_id'] = $userId;
+        $data['status'] = ConnectionsStatusEnum::Pending->value;
         $this->notificationRepository->store([
             'form_user_id' => $data['user_id'],
             'to_user_id' => $data['connected_id'],
@@ -110,6 +123,11 @@ class ConnectionService
     public function getWhere($where)
     {
         return $this->repository->getWhere($where);
+    }
+
+    public function getWithRelations($relations, $where = [])
+    {
+        return $this->repository->getWhereWithRelations($relations, $where);
     }
 
     public function getWhereFirst($where)

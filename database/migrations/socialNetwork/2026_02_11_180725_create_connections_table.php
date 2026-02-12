@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('connected_id');
-            $table->foreign('connected_id')->references('id')->on('connections')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('connected_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status');
             $table->timestamps();
         });

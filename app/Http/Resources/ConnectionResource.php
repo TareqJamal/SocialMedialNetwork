@@ -10,8 +10,8 @@ class ConnectionResource extends JsonResource
     {
         return [
             'id' => (integer)$this->id,
-            'name' => (string)$this->connected->name,
-            'profile_picture' => show_file($this->connected->profile_picture),
+            'name' => (string)$this->user->name,
+            'profile_picture' => show_file($this->user->profile_picture),
         ];
     }
 }

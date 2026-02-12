@@ -21,11 +21,13 @@ class PostService
     public function storePost($data)
     {
         $post = $this->store($data);
-        foreach ($data['images'] as $image) {
-            $this->postImageRepository->storeWithFiles([
-                'post_id' => $post->id,
-                'image' => $image
-            ]);
+        if (isset($data['images'])) {
+            foreach ($data['images'] as $image) {
+                $this->postImageRepository->storeWithFiles([
+                    'post_id' => $post->id,
+                    'image' => $image
+                ]);
+            }
         }
         return $post;
     }

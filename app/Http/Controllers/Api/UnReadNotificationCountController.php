@@ -11,7 +11,7 @@ class UnReadNotificationCountController extends Controller
 {
     public function index(Request $request, objService $service)
     {
-        $data = $service->getWhere(['to_user_id' => Auth::guard('api')->user()->id, 'is_read' => 0]);
+        $data = $service->getWhere(['to_user_id' => Auth::id(), 'is_read' => 0]);
         return jsonSuccess($data->count());
     }
 

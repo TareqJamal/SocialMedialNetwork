@@ -42,7 +42,7 @@ Route::group(['middleware' => ['lang', 'acceptJson']], function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::resource('search-users', SearchUserController::class);
         Route::resource('connections', ConnectionsController::class);
-        Route::resource('connections-requests', ConnectionsRequestController::class);
+        Route::resource('connection-request', ConnectionsRequestController::class);
         Route::resource('my-connections-requests', MyConnectionsRequestController::class);
         Route::resource('posts', PostController::class);
         Route::resource('all-posts', AllPostController::class);

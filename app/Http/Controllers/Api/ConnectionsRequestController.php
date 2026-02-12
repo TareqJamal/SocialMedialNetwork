@@ -34,7 +34,9 @@ class ConnectionsRequestController extends Controller
         if (!$obj) {
             return jsonApiValid(null, __("api.data_not_found"));
         }
-        $data['user_id'] = Auth::id();
+        if ($obj->connected_id !== Auth::id()) {
+            return jsonApiForbidden();
+        }
         $service->updateConnectionRequest($id, $data);
         return jsonSuccess();
     }

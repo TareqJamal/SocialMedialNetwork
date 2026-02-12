@@ -41,7 +41,8 @@ class SearchUserRequest extends MainRequest
     protected function view(): array
     {
         return [
-            // Add your validation rules for viewing resources here
+            'name' => 'nullable|string|max:255',
+            'q' => 'nullable|string|max:255',
         ];
     }
 

@@ -11,6 +11,7 @@ class PostResource extends JsonResource
         return [
             'id' => (int)$this->id,
             'author_name' => (string)@$this->user->name,
+            'author_id' => $this->user_id,
             'profile_picture' => show_file(@$this->user->profile_picture),
             'content' => (string)$this->content,
             'comments' => CommentResource::collection($this->comments),
@@ -18,6 +19,7 @@ class PostResource extends JsonResource
             'number_of_likes' => $this->likes()->count(),
             'images' => PostImageResource::collection($this->images),
             'date' => (string)$this->created_at?->diffForHumans(),
+            'created_at' => $this->created_at?->format('Y-m-d\TH:i'),
         ];
     }
 }

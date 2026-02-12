@@ -13,7 +13,7 @@ class MyConnectionsRequestController extends Controller
 {
     public function index(ConnectionService $service)
     {
-        $data = $service->getWhere(['connected_id' => Auth::id(), 'status' => ConnectionsStatusEnum::Pending->value]);
+        $data = $service->getWithRelations(['user'], ['connected_id' => Auth::id(), 'status' => ConnectionsStatusEnum::Pending->value]);
         return jsonSuccess(ConnectionResource::collection($data));
     }
 

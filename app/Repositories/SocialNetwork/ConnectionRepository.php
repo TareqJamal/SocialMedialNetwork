@@ -18,7 +18,12 @@ class ConnectionRepository extends MainRepository
         $this->fileFolder = '';
     }
 
-
-
-
+    public function getConnectionBetween($userId, $connectedId)
+    {
+        return $this->model->where(function ($query) use ($userId, $connectedId) {
+            $query->where('user_id', $userId)->where('connected_id', $connectedId);
+        })->orWhere(function ($query) use ($userId, $connectedId) {
+            $query->where('user_id', $connectedId)->where('connected_id', $userId);
+        })->first();
+    }
 }

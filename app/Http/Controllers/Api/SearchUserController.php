@@ -11,6 +11,16 @@ use App\Services\SocialNetwork\UserService;
 class SearchUserController extends Controller
 {
 
+    public function index(SearchUserRequest $request, UserService $service)
+    {
+        $data = $request->validated();
+        if (empty($data) && $request->has('q')) {
+            $data['name'] = $request->get('q');
+        }
+        $users = $service->searchUser($data);
+        return jsonSuccess(UserResource::collection($users));
+    }
+
     public function store(SearchUserRequest $request, UserService $service)
     {
         $data = $request->validated();

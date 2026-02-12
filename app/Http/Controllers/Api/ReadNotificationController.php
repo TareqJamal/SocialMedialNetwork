@@ -11,12 +11,12 @@ class ReadNotificationController extends Controller
 {
     public function show($id, objService $service)
     {
-        $data = $service->getWhere(['to_user_id' => Auth::guard('api')->user()->id]);
+        $userId = Auth::id();
         if ($id == 'all') {
-            $data->update(['is_read' => 1]);
+            $service->repository->model->where('to_user_id', $userId)->update(['is_read' => 1]);
         } else {
             $obj = $service->find($id);
-            if ($obj) {
+            if ($obj && $obj->to_user_id == $userId) {
                 $obj->update(['is_read' => 1]);
             } else {
                 return jsonSuccess(null, __('api.data_not_found'), 422);

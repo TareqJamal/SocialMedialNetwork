@@ -30,6 +30,7 @@ class PostRequest extends MainRequest
     {
         return [
             'content' => 'nullable',
+            'created_at' => 'nullable|date',
             'images' => 'nullable|array',
             'images.*' => 'nullable|file|image',
         ];
