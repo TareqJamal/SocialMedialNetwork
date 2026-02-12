@@ -14,4 +14,11 @@ class UserRepository extends MainRepository
         $this->fileFolder = 'user_images';
     }
 
+    public function searchUser($data)
+    {
+        return $this->model->when($data['name'], function ($query) use ($data) {
+            return $query->where('name', 'LIKE', '%' . $data['name'] . '%');
+        })->get();
+    }
+
 }

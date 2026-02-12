@@ -4,7 +4,7 @@ namespace App\Http\Requests\SocialNetwork;
 
 use App\Http\Requests\MainRequest;
 
-class LoginRequest extends MainRequest
+class SearchUserRequest extends MainRequest
 {
     public function rules(): array
     {
@@ -20,8 +20,7 @@ class LoginRequest extends MainRequest
     protected function store(): array
     {
         return [
-            'email' => 'required|exists:users,email',
-            'password' => 'required',
+            'name' => 'required|string|max:255',
         ];
     }
 
@@ -49,13 +48,10 @@ class LoginRequest extends MainRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('api.email_required'),
-            'email.exists' => __('api.email_not_found'), // <- هنا
-
-            'password.required' => __('api.password_required'),
-            'password.min' => __('api.password_min'),
+            'name.required' => __('api.name_required'),
+            'name.string' => __('api.name_string'),
+            'name.max' => __('api.name_max'),
         ];
     }
-
 
 }

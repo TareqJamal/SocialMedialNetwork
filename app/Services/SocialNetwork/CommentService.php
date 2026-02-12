@@ -3,35 +3,22 @@
 namespace App\Services\SocialNetwork;
 
 
-use App\Repositories\SocialNetwork\UserRepository;
-use Illuminate\Support\Facades\Hash;
+use App\Repositories\SocialNetwork\CommentRepository;
+use App\Repositories\SocialNetwork\PostImageRepository;
+use App\Repositories\SocialNetwork\PostRepository;
 
-class UserService
+class CommentService
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private CommentRepository $repository)
     {
 
     }
 
-    public function login($data)
-    {
-        $user = $this->getWhereFirst(['email' => $data['email']]);
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return ['error' => __("api.the_password_is_incorrect")];
-        }
-        $token = $user->createToken('api-token')->plainTextToken;
-        $user->token = $token;
-        return $user;
-    }
-
-    public function searchUser($data)
-    {
-        return $this->repository->searchUser($data);
-    }
     public function getDataTable()
     {
         return $this->repository->getDataTable();
     }
+
 
     public function find($id)
     {
@@ -57,6 +44,7 @@ class UserService
     {
         return $this->repository->storeWithFiles($data);
     }
+
     public function storeWithFilesWithOneLanguage($data)
     {
         return $this->repository->storeWithFilesWithOneLanguage($data);
@@ -85,9 +73,9 @@ class UserService
         return $this->repository->get();
     }
 
-    public function getWhere($where)
+    public function getWhereWithRelations($relations ,$where)
     {
-        return $this->repository->getWhere($where);
+        return $this->repository->getWhereWithRelations($relations, $where);
     }
 
     public function getWhereFirst($where)

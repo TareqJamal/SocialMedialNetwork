@@ -2,32 +2,18 @@
 
 namespace App\Services\SocialNetwork;
 
-
+use App\Enums\NotificationTypesEnum;
+use App\Repositories\SocialNetwork\NotificationRepository;
 use App\Repositories\SocialNetwork\UserRepository;
-use Illuminate\Support\Facades\Hash;
 
-class UserService
+class NotificationService
 {
-    public function __construct(private UserRepository $repository)
+
+    public function __construct(private NotificationRepository $repository, private UserRepository $userRepository)
     {
 
     }
 
-    public function login($data)
-    {
-        $user = $this->getWhereFirst(['email' => $data['email']]);
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return ['error' => __("api.the_password_is_incorrect")];
-        }
-        $token = $user->createToken('api-token')->plainTextToken;
-        $user->token = $token;
-        return $user;
-    }
-
-    public function searchUser($data)
-    {
-        return $this->repository->searchUser($data);
-    }
     public function getDataTable()
     {
         return $this->repository->getDataTable();
@@ -57,10 +43,7 @@ class UserService
     {
         return $this->repository->storeWithFiles($data);
     }
-    public function storeWithFilesWithOneLanguage($data)
-    {
-        return $this->repository->storeWithFilesWithOneLanguage($data);
-    }
+
 
     public function update($id, $data)
     {
@@ -83,16 +66,10 @@ class UserService
     public function get()
     {
         return $this->repository->get();
-    }
-
-    public function getWhere($where)
+    }public function getWhere($where)
     {
         return $this->repository->getWhere($where);
     }
 
-    public function getWhereFirst($where)
-    {
-        return $this->repository->getWhereFirst($where);
-    }
 
 }

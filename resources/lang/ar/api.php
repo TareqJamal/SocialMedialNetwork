@@ -3,7 +3,10 @@ return [
     'name_required' => 'الاسم مطلوب.',
     'name_string' => 'الاسم يجب أن يكون نصاً.',
     'name_max' => 'الاسم يجب ألا يزيد عن 255 حرف.',
-
+    'email_required' => 'البريد الإلكتروني مطلوب.',
+    'email_not_found' => 'البريد الإلكتروني غير موجود في النظام.',
+    'password_required' => 'كلمة المرور مطلوبة.',
+    'password_min' => 'كلمة المرور يجب ألا تقل عن :min أحرف.',
     'email_required' => 'البريد الإلكتروني مطلوب.',
     'email_email' => 'البريد الإلكتروني غير صالح.',
     'email_unique' => 'البريد الإلكتروني موجود بالفعل.',
@@ -20,4 +23,8 @@ return [
 
     'phone_code_required' => 'كود الهاتف مطلوب.',
     'the_password_is_incorrect' => 'كلمة المررور غير صحيحة',
+    'you_have_already_connection_requested' => 'لديك بالفعل طلب تواصل لهذا المستخدم في حالة الانتظار',
+    'data_not_found' => 'لا يوجد بيانات',
+    'content_required' => 'محتوي المنشور مطلوب',
 ];
+

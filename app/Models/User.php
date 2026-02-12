@@ -3,11 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\MyAuth\MustVerifyEmail;
+use App\Enums\ConnectionsStatusEnum;
+use App\Models\SocialNetwork\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable
 {
@@ -44,5 +47,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sentConnections(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'connections', 'user_id', 'connected_id')
+            ->wherePivot('status', '=', ConnectionsStatusEnum::Accepted->value);
+    }
+
+    public function receivedConnections(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'connections', 'connected_id', 'user_id'
+        )->wherePivot('status', ConnectionsStatusEnum::Accepted->value);
+    }
+
+    public function getFriendsAttribute()
+    {
+        return $this->sentConnections->merge($this->receivedConnections)->unique('id')->values();
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class, 'user_id');
+    }
+
 
 }

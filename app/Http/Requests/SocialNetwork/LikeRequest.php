@@ -4,7 +4,7 @@ namespace App\Http\Requests\SocialNetwork;
 
 use App\Http\Requests\MainRequest;
 
-class LoginRequest extends MainRequest
+class LikeRequest extends MainRequest
 {
     public function rules(): array
     {
@@ -20,14 +20,14 @@ class LoginRequest extends MainRequest
     protected function store(): array
     {
         return [
-            'email' => 'required|exists:users,email',
-            'password' => 'required',
+            'post_id' => 'required|exists:posts,id',
         ];
     }
 
     protected function update(): array
     {
         return [
+
         ];
     }
 
@@ -49,13 +49,9 @@ class LoginRequest extends MainRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('api.email_required'),
-            'email.exists' => __('api.email_not_found'), // <- هنا
+            'content.required' => __('api.content_required'),
 
-            'password.required' => __('api.password_required'),
-            'password.min' => __('api.password_min'),
         ];
     }
-
 
 }

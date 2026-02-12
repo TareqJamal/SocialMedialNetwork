@@ -103,7 +103,15 @@ class MainRepository
     {
         return $this->model->get();
     }
+    public function getWithRelations($relations)
+    {
+        return $this->model->with($relations)->get();
+    }
 
+    public function getWhereWithRelations($relations, $where)
+    {
+        return $this->model->with($relations)->where($where)->get();
+    }
     public function getWhere($where)
     {
         return $this->model->where($where)->get();

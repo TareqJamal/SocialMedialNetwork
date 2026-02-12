@@ -3,30 +3,15 @@
 namespace App\Services\SocialNetwork;
 
 
-use App\Repositories\SocialNetwork\UserRepository;
-use Illuminate\Support\Facades\Hash;
+use App\Enums\ConnectionsStatusEnum;
+use App\Repositories\SocialNetwork\ConnectionRepository;
+use App\Repositories\SocialNetwork\PostImageRepository;
 
-class UserService
+class PostImageService
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private PostImageRepository $repository)
     {
 
-    }
-
-    public function login($data)
-    {
-        $user = $this->getWhereFirst(['email' => $data['email']]);
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return ['error' => __("api.the_password_is_incorrect")];
-        }
-        $token = $user->createToken('api-token')->plainTextToken;
-        $user->token = $token;
-        return $user;
-    }
-
-    public function searchUser($data)
-    {
-        return $this->repository->searchUser($data);
     }
     public function getDataTable()
     {
@@ -57,6 +42,7 @@ class UserService
     {
         return $this->repository->storeWithFiles($data);
     }
+
     public function storeWithFilesWithOneLanguage($data)
     {
         return $this->repository->storeWithFilesWithOneLanguage($data);
